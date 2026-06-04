@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cinzel", Georgia, serif;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+/* Custom Chinese decorative borders and patterns */
+.chinese-lattice {
+  background-image:
+    radial-gradient(ellipse at center, rgba(92, 29, 36, 0.95) 0%, rgba(26, 6, 9, 0.98) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M0 30 L60 30 M30 0 L30 60 M0 0 L60 60 M60 0 L0 60' stroke='rgba(230, 194, 128, 0.03)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+.gold-glow {
+  text-shadow: 0 0 10px rgba(230, 194, 128, 0.4);
+}
+
+.gold-border-glow {
+  box-shadow: 0 0 15px rgba(230, 194, 128, 0.15);
+}

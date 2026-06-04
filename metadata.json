@@ -1,0 +1,6 @@
+{
+  "name": "shumai",
+  "description": "One platform for all your creative work. Upload creative files, manage projects, assign tasks, get precise feedback, and share your work.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

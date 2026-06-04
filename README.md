@@ -1,20 +1,28 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# shumai-web
 
-# Run and deploy your AI Studio app
+This is the website of [shumai.one](https://shumai.one).
 
-This contains everything you need to run your app locally.
+## Development
 
-View your app in AI Studio: https://ai.studio/apps/79c24a4f-14a8-454b-ba20-49ac152bb16c
+This project is built using React 19, Vite, Tailwind CSS, and TypeScript, running on the **Bun** runtime.
 
-## Run Locally
+### Setup & Local Run
 
-**Prerequisites:**  Node.js
+1. **Install dependencies**:
+   ```bash
+   bun install
+   ```
+2. **Configure environment**:
+   Set `GEMINI_API_KEY` in `.env.local`
+3. **Start local development server**:
+   ```bash
+   bun run dev
+   ```
 
+### Quality Assurance
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+This repository uses **Biome** for formatting, linting, and import organization.
+Before committing changes, make sure all validations pass:
+```bash
+bun run validate
+```
