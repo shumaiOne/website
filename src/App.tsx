@@ -12,6 +12,7 @@ import { motion } from 'motion/react';
 import type React from 'react';
 import Footer from './components/Footer';
 import InteractiveShowcase from './components/InteractiveShowcase';
+import { ShumaiLogo } from './components/ShumaiLogo';
 
 export default function App() {
   // Scroll to workspace demo helper
@@ -34,18 +35,8 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
           {/* Logo block */}
           <div className="flex items-center gap-3">
-            {/* Custom vector logo placeholder styled incredibly */}
-            <div className="relative w-8 h-8 flex items-center justify-center bg-gradient-to-br from-[#E6C280] to-[#C59B27] rounded shadow-md pointer-events-none">
-              <svg
-                className="w-5 h-5 text-[#5C1D24]"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              >
-                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-              </svg>
-            </div>
+            {/* Custom vector logo */}
+            <ShumaiLogo className="w-8 h-8 shadow-md" />
 
             {/* App name with elegant Chinese Border styling (corners only) */}
             <div className="relative group">
@@ -75,7 +66,7 @@ export default function App() {
             </a>
             <span>•</span>
             <a
-              href="https://github.com"
+              href="https://github.com/shumaiOne/shumai"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-[#E6C280] transition-colors flex items-center gap-1"
@@ -197,8 +188,9 @@ export default function App() {
             className="flex flex-row items-center justify-center font-mono text-xs sm:text-sm uppercase tracking-widest text-[#E6C280] mb-2 select-none"
           >
             <a
-              href="#demo-workspace"
-              onClick={scrollToDemo}
+              href="https://staging.shumai.one"
+              target="_blank"
+              rel="noopener noreferrer"
               className="hover:text-white transition-all px-2.5 sm:px-3.5 flex items-center gap-1.5 cursor-pointer font-bold active:scale-95"
             >
               <Play className="w-3.5 h-3.5 stroke-current" />
@@ -209,24 +201,22 @@ export default function App() {
               /
             </span>
 
-            <button
-              onClick={() => {
-                alert(
-                  'Redirecting to the developers sandbox guide... (In a real workspace, this leads to the markdown docs folder)',
-                );
-              }}
-              className="hover:text-white transition-all px-2.5 sm:px-3.5 flex items-center gap-1.5 cursor-pointer bg-transparent border-none font-bold active:scale-95"
+            <a
+              href="https://docs.shumai.one"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-all px-2.5 sm:px-3.5 flex items-center gap-1.5 cursor-pointer font-bold active:scale-95"
             >
               <BookOpen className="w-3.5 h-3.5" />
               <span>Docs</span>
-            </button>
+            </a>
 
             <span className="text-[#E6C280]/30 mx-1.5 sm:mx-2.5 font-normal select-none text-xs sm:text-sm">
               /
             </span>
 
             <a
-              href="https://github.com"
+              href="https://github.com/shumaiOne/shumai"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-white transition-all px-2.5 sm:px-3.5 flex items-center gap-1.5 cursor-pointer font-bold active:scale-95"
