@@ -3,10 +3,16 @@
   "name": "website",
   "compatibility_date": "2026-06-04",
   "observability": {
-    "enabled": true
+    "enabled": true,
   },
+  "routes": [
+    {
+      "pattern": "shumai.one",
+      "custom_domain": true,
+    },
+  ],
   "assets": {
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "single-page-application",
   },
-  "compatibility_flags": ["nodejs_compat"]
+  "compatibility_flags": ["nodejs_compat"],
 }
