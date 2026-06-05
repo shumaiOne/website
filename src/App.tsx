@@ -111,7 +111,7 @@ export default function App() {
                 strokeWidth="2"
               >
                 <path d="M2.5 12V2.5H12" />
-                <path d="M5.5 2.5V5.5H2.5" />
+                <path d="M6.4 2.5V6.4H2.5" />
               </svg>
               <svg
                 className="absolute -top-2.5 -right-2.5 w-6 h-6 text-[#E6C280] transform rotate-90"
@@ -121,7 +121,7 @@ export default function App() {
                 strokeWidth="2"
               >
                 <path d="M2.5 12V2.5H12" />
-                <path d="M5.5 2.5V5.5H2.5" />
+                <path d="M6.4 2.5V6.4H2.5" />
               </svg>
               <svg
                 className="absolute -bottom-2.5 -left-2.5 w-6 h-6 text-[#E6C280] transform -rotate-90"
@@ -131,7 +131,7 @@ export default function App() {
                 strokeWidth="2"
               >
                 <path d="M2.5 12V2.5H12" />
-                <path d="M5.5 2.5V5.5H2.5" />
+                <path d="M6.4 2.5V6.4H2.5" />
               </svg>
               <svg
                 className="absolute -bottom-2.5 -right-2.5 w-6 h-6 text-[#E6C280] transform rotate-180"
@@ -141,7 +141,7 @@ export default function App() {
                 strokeWidth="2"
               >
                 <path d="M2.5 12V2.5H12" />
-                <path d="M5.5 2.5V5.5H2.5" />
+                <path d="M6.4 2.5V6.4H2.5" />
               </svg>
 
               <div className="flex items-center gap-3">
@@ -176,8 +176,9 @@ export default function App() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xs md:text-sm text-gray-300 max-w-2xl leading-relaxed mb-6 font-sans"
           >
-            Upload creative files, manage projects, collaborate with our layout Agent, and get
-            precise coordinate feedback — all in one unified Eastern symmetry-inspired workspace.
+            Upload creative files, manage projects, and collaborate with teammates and Shumai Agent
+            in one unified workspace built for precise feedback, shared progress, and open source
+            flexibility.
           </motion.p>
 
           {/* REQUIRED TRIPLE ACTION BUTTON GROUP WITH SLASH-DIVIDED DESIGN */}
