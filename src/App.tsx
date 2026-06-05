@@ -51,39 +51,16 @@ export default function App() {
             </div>
           </div>
 
-          {/* Center text tag */}
-          <div className="hidden md:flex items-center gap-6 text-xs font-mono uppercase tracking-widest text-gray-300">
-            <a href="#features-preview" className="hover:text-[#E6C280] transition-colors">
-              Workspace Capabilities
-            </a>
-            <span>•</span>
-            <a
-              href="#demo-workspace"
-              onClick={scrollToDemo}
-              className="hover:text-[#E6C280] transition-colors"
-            >
-              Interactive Demo
-            </a>
-            <span>•</span>
+          {/* Action trigger button */}
+          <div className="flex items-center gap-3">
             <a
               href="https://github.com/shumaiOne/shumai"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#E6C280] transition-colors flex items-center gap-1"
+              className="px-4 py-1.5 text-xs font-bold text-[#5C1D24] bg-gradient-to-r from-[#E6C280] to-[#C59B27] rounded shadow hover:brightness-110 active:scale-95 transition-all text-center tracking-wide flex items-center gap-1.5"
             >
-              <span>GitHub</span>
-              <ExternalLink className="w-3 h-3" />
-            </a>
-          </div>
-
-          {/* Action trigger button */}
-          <div className="flex items-center gap-3">
-            <a
-              href="#demo-workspace"
-              onClick={scrollToDemo}
-              className="px-4 py-1.5 text-xs font-bold text-[#5C1D24] bg-gradient-to-r from-[#E6C280] to-[#C59B27] rounded shadow hover:brightness-110 active:scale-95 transition-all text-center tracking-wide"
-            >
-              Launch Demo
+              <Github className="w-3.5 h-3.5" />
+              <span>View on GitHub</span>
             </a>
           </div>
         </div>
