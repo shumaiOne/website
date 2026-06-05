@@ -39,13 +39,13 @@ export default function App() {
             <ShumaiLogo className="w-8 h-8 shadow-md" />
 
             {/* App name with elegant Chinese Border styling (corners only) */}
-            <div className="relative group">
-              <div className="absolute -top-1 -left-1 w-1.5 h-1.5 border-t border-l border-[#E6C280] rounded-xs" />
-              <div className="absolute -top-1 -right-1 w-1.5 h-1.5 border-t border-r border-[#E6C280] rounded-xs" />
-              <div className="absolute -bottom-1 -left-1 w-1.5 h-1.5 border-b border-l border-[#E6C280] rounded-xs" />
-              <div className="absolute -bottom-1 -right-1 w-1.5 h-1.5 border-b border-r border-[#E6C280] rounded-xs" />
+            <div className="relative group h-8 flex items-center">
+              <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-[#E6C280] rounded-xs" />
+              <div className="absolute top-0 right-0 w-1.5 h-1.5 border-t border-r border-[#E6C280] rounded-xs" />
+              <div className="absolute bottom-0 left-0 w-1.5 h-1.5 border-b border-l border-[#E6C280] rounded-xs" />
+              <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-b border-r border-[#E6C280] rounded-xs" />
 
-              <span className="px-3 py-1 block text-sm font-serif font-bold text-white tracking-widest uppercase truncate max-w-[124px]">
+              <span className="px-3 block text-sm font-serif font-bold text-white tracking-widest uppercase truncate max-w-[124px]">
                 shumai
               </span>
             </div>
