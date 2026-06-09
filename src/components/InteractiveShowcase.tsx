@@ -52,10 +52,10 @@ export default function InteractiveShowcase() {
       <div className="w-full max-w-6xl mx-auto px-4 relative">
         {/* CAROUSEL VIEWPORT WITH NAVIGATION ARROWS */}
         <div className="relative group mb-4">
-          {/* Navigation Arrows - Flanking the image */}
+          {/* Navigation Arrows - Flanking the image inside viewport */}
           <button
             onClick={handlePrev}
-            className="absolute left-[-20px] md:left-[-120px] top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#E6C280]/20 border border-white/10 flex items-center justify-center text-white hover:text-black hover:bg-white hover:border-white/20 transition-all backdrop-blur-sm cursor-pointer"
+            className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#E6C280]/20 border border-white/10 flex items-center justify-center text-white hover:text-black hover:bg-white hover:border-white/20 transition-all backdrop-blur-sm cursor-pointer"
             aria-label="Previous slide"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -63,7 +63,7 @@ export default function InteractiveShowcase() {
 
           <button
             onClick={handleNext}
-            className="absolute right-[-20px] md:right-[-120px] top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#E6C280]/20 border border-white/10 flex items-center justify-center text-white hover:text-black hover:bg-white hover:border-white/20 transition-all backdrop-blur-sm cursor-pointer"
+            className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-10 w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#E6C280]/20 border border-white/10 flex items-center justify-center text-white hover:text-black hover:bg-white hover:border-white/20 transition-all backdrop-blur-sm cursor-pointer"
             aria-label="Next slide"
           >
             <ChevronRight className="w-6 h-6" />
