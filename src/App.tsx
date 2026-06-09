@@ -273,11 +273,20 @@ export default function App() {
       >
         <section className="flex-1 flex flex-col justify-start py-2" id="demo-workspace">
           <div className="max-w-6xl mx-auto px-4 w-full">
-            {/* Section banner */}
-            <div className="text-center max-w-2xl mx-auto mb-4">
-              <h2 className="text-2xl md:text-3xl font-serif text-white font-black">
-                shumai features
-              </h2>
+            {/* Redesigned themed section header */}
+            <div className="flex flex-col items-center mb-8">
+              <div className="relative bg-[#51161C]/40 px-8 py-2 rounded-xs select-none border border-[#E6C280]/20">
+                {/* SVG Ornate custom corner widgets for design sense */}
+                <div className="absolute -top-1.5 -left-1.5 w-4 h-4 border-t border-l border-[#E6C280]" />
+                <div className="absolute -top-1.5 -right-1.5 w-4 h-4 border-t border-r border-[#E6C280]" />
+                <div className="absolute -bottom-1.5 -left-1.5 w-4 h-4 border-b border-l border-[#E6C280]" />
+                <div className="absolute -bottom-1.5 -right-1.5 w-4 h-4 border-b border-r border-[#E6C280]" />
+
+                <h2 className="text-xl md:text-2xl font-serif text-[#E6C280] font-black uppercase tracking-[0.3em] gold-glow">
+                  shumai features
+                </h2>
+              </div>
+              <div className="h-px w-24 bg-gradient-to-r from-transparent via-[#E6C280]/30 to-transparent mt-4" />
             </div>
           </div>
 

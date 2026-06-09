@@ -5,12 +5,7 @@ export default function Footer() {
       <div className="absolute inset-0 opacity-5 pointer-events-none select-none">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
-            <pattern
-              id="lattice"
-              width="40"
-              height="40"
-              patternUnits="userSpaceOnUse"
-            >
+            <pattern id="lattice" width="40" height="40" patternUnits="userSpaceOnUse">
               <path
                 d="M0 20 L40 20 M20 0 L20 40 M0 0 L40 40 M40 0 L0 40"
                 stroke="#E6C280"
@@ -24,7 +19,7 @@ export default function Footer() {
 
       <div className="max-w-6xl mx-auto relative z-10 flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
         <p className="text-xs text-gray-400 font-mono tracking-wide">
-          © {new Date().getFullYear()} shumai.io — Made by{" "}
+          © {new Date().getFullYear()} shumai.io — Made by{' '}
           <a
             href="https://github.com/Yiling-J"
             target="_blank"
