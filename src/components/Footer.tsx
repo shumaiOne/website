@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="relative bg-[#1A0609]/95 border-t border-[#E6C280]/10 pt-8 pb-8 overflow-hidden px-4">
+    <footer className="relative bg-[#1A0609]/95 border-t border-[#E6C280]/10 py-4 overflow-hidden px-4">
       {/* Decorative Traditional Grid Lattice overlay in the footer background */}
       <div className="absolute inset-0 opacity-5 pointer-events-none select-none">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">

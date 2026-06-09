@@ -268,13 +268,13 @@ export default function App() {
 
       {/* WORKSPACE DEMO PREVIEW SECTION (Page 2) */}
       <div
-        className="h-full w-full shrink-0 snap-start flex flex-col justify-between relative bg-black/40 border-t border-[#E6C280]/15 pt-20"
+        className="h-full w-full shrink-0 snap-start flex flex-col justify-between relative bg-black/40 border-t border-[#E6C280]/15 pt-16"
         id="features-page"
       >
-        <section className="flex-1 flex flex-col justify-center py-4" id="demo-workspace">
+        <section className="flex-1 flex flex-col justify-center py-2" id="demo-workspace">
           <div className="max-w-6xl mx-auto px-4 w-full">
             {/* Section banner */}
-            <div className="text-center max-w-2xl mx-auto mb-6">
+            <div className="text-center max-w-2xl mx-auto mb-4">
               <h2 className="text-2xl md:text-4xl font-serif text-white font-black">
                 shumai features
               </h2>

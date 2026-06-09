@@ -51,7 +51,7 @@ export default function InteractiveShowcase() {
       {/* Main Presentation Container */}
       <div className="w-full max-w-6xl mx-auto px-4 relative">
         {/* CAROUSEL VIEWPORT WITH NAVIGATION ARROWS */}
-        <div className="relative group mb-6">
+        <div className="relative group mb-4">
           {/* Navigation Arrows - Flanking the image */}
           <button
             onClick={handlePrev}
@@ -70,7 +70,7 @@ export default function InteractiveShowcase() {
           </button>
 
           {/* IMAGE VIEWPORT */}
-          <div className="bg-[#1C080B]/40 border border-[#E6C280]/15 rounded-2xl overflow-hidden aspect-video relative shadow-2xl">
+          <div className="bg-[#1C080B]/40 border border-[#E6C280]/15 rounded-2xl overflow-hidden aspect-video relative shadow-2xl max-h-[50vh] mx-auto">
             <AnimatePresence mode="wait">
               <motion.img
                 key={activeTab}
@@ -87,7 +87,7 @@ export default function InteractiveShowcase() {
         </div>
 
         {/* TEXT-BASED TABS GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 mt-4">
           {SHOWCASE_TABS.map((tab) => {
             const isActive = activeTab === tab.id;
             return (
