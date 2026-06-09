@@ -70,7 +70,7 @@ export default function InteractiveShowcase() {
           </button>
 
           {/* IMAGE VIEWPORT */}
-          <div className="bg-[#1C080B]/40 border border-[#E6C280]/15 rounded-2xl overflow-hidden aspect-video relative shadow-2xl max-h-[50vh] mx-auto">
+          <div className="bg-[#1C080B]/40 border border-[#E6C280]/15 rounded-2xl overflow-hidden aspect-video relative shadow-2xl max-h-[55vh] w-full">
             <AnimatePresence mode="wait">
               <motion.img
                 key={activeTab}
