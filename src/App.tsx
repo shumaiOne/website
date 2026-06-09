@@ -270,7 +270,7 @@ export default function App() {
           <div className="text-center max-w-2xl mx-auto mb-12">
             <div className="inline-flex items-center gap-1.5 p-1 px-3 mb-3 rounded-full bg-[#5C1D24]/80 border border-[#E6C280]/40 text-[#E6C280] font-mono text-[9px] uppercase tracking-widest">
               <Sparkles className="w-3 h-3 text-[#E6C280]" />
-              <span>Symmetric Space Live</span>
+              <span>Shumai Preview</span>
             </div>
             <h2 className="text-2xl md:text-4xl font-serif text-white font-black mb-3">
               Experience shumai in Action
