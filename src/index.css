@@ -10,6 +10,15 @@
     monospace;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 /* Custom Chinese decorative borders and patterns */
 .chinese-lattice {
   background-image:

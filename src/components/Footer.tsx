@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="relative bg-[#1A0609]/95 border-t border-[#E6C280]/10 pt-8 pb-8 overflow-hidden px-4">
+    <footer className="relative bg-[#1A0609]/95 border-t border-[#E6C280]/10 py-2 overflow-hidden px-4">
       {/* Decorative Traditional Grid Lattice overlay in the footer background */}
       <div className="absolute inset-0 opacity-5 pointer-events-none select-none">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
@@ -19,7 +19,7 @@ export default function Footer() {
 
       <div className="max-w-6xl mx-auto relative z-10 flex flex-col sm:flex-row items-center justify-center gap-4 text-center">
         <p className="text-xs text-gray-400 font-mono tracking-wide">
-          © {new Date().getFullYear()} shumai.io — Made by{' '}
+          © {new Date().getFullYear()} shumai.one — Made by{' '}
           <a
             href="https://github.com/Yiling-J"
             target="_blank"
