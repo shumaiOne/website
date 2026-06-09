@@ -1,26 +1,26 @@
 import {
-    BookOpen,
-    ExternalLink,
-    FolderKanban,
-    Github,
-    MessageSquare,
-    Play,
-    Sparkles,
-    Upload,
-} from "lucide-react";
-import { motion } from "motion/react";
-import type React from "react";
-import Footer from "./components/Footer";
-import InteractiveShowcase from "./components/InteractiveShowcase";
-import { ShumaiLogo } from "./components/ShumaiLogo";
+  BookOpen,
+  ExternalLink,
+  FolderKanban,
+  Github,
+  MessageSquare,
+  Play,
+  Sparkles,
+  Upload,
+} from 'lucide-react';
+import { motion } from 'motion/react';
+import type React from 'react';
+import Footer from './components/Footer';
+import InteractiveShowcase from './components/InteractiveShowcase';
+import { ShumaiLogo } from './components/ShumaiLogo';
 
 export default function App() {
   // Scroll to workspace demo helper
   const scrollToDemo = (e: React.MouseEvent) => {
     e.preventDefault();
-    const element = document.getElementById("features-page");
+    const element = document.getElementById('features-page');
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -153,9 +153,9 @@ export default function App() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xs md:text-sm text-gray-300 max-w-2xl leading-relaxed mb-6 font-sans"
           >
-            Upload creative files, manage projects, and collaborate with
-            teammates and Shumai Agent in one unified workspace built for
-            precise feedback, shared progress, and open source flexibility.
+            Upload creative files, manage projects, and collaborate with teammates and Shumai Agent
+            in one unified workspace built for precise feedback, shared progress, and open source
+            flexibility.
           </motion.p>
 
           {/* REQUIRED TRIPLE ACTION BUTTON GROUP WITH SLASH-DIVIDED DESIGN */}
@@ -218,9 +218,7 @@ export default function App() {
             <div className="w-9 h-9 rounded-full bg-[#5C1D24] border border-[#E6C280]/30 text-[#E6C280] flex items-center justify-center mb-2 group-hover:bg-[#E6C280] group-hover:text-[#5C1D24] transition-all cursor-pointer">
               <Upload className="w-4 h-4" />
             </div>
-            <h3 className="text-[11px] font-bold text-gray-200 mb-0.5">
-              Upload files
-            </h3>
+            <h3 className="text-[11px] font-bold text-gray-200 mb-0.5">Upload files</h3>
             <p className="text-[9px] text-gray-400">
               High-fidelity videography and creative templates
             </p>
@@ -234,12 +232,8 @@ export default function App() {
             <div className="w-9 h-9 rounded-full bg-[#5C1D24] border border-[#E6C280]/30 text-[#E6C280] flex items-center justify-center mb-2 group-hover:bg-[#E6C280] group-hover:text-[#5C1D24] transition-all cursor-pointer">
               <FolderKanban className="w-4 h-4" />
             </div>
-            <h3 className="text-[11px] font-bold text-gray-200 mb-0.5">
-              Manage projects
-            </h3>
-            <p className="text-[9px] text-gray-400">
-              Unified repositories and asset organization
-            </p>
+            <h3 className="text-[11px] font-bold text-gray-200 mb-0.5">Manage projects</h3>
+            <p className="text-[9px] text-gray-400">Unified repositories and asset organization</p>
           </button>
 
           <button
@@ -250,9 +244,7 @@ export default function App() {
             <div className="w-9 h-9 rounded-full bg-[#5C1D24] border border-[#E6C280]/30 text-[#E6C280] flex items-center justify-center mb-2 group-hover:bg-[#E6C280] group-hover:text-[#5C1D24] transition-all cursor-pointer">
               <Sparkles className="w-4 h-4" />
             </div>
-            <h3 className="text-[11px] font-bold text-gray-200 mb-0.5">
-              Agent Co-Production
-            </h3>
+            <h3 className="text-[11px] font-bold text-gray-200 mb-0.5">Agent Co-Production</h3>
             <p className="text-[9px] text-gray-400">
               Automated co-production guidance & layout audits
             </p>
@@ -266,9 +258,7 @@ export default function App() {
             <div className="w-9 h-9 rounded-full bg-[#5C1D24] border border-[#E6C280]/30 text-[#E6C280] flex items-center justify-center mb-2 group-hover:bg-[#E6C280] group-hover:text-[#5C1D24] transition-all cursor-pointer">
               <MessageSquare className="w-4 h-4" />
             </div>
-            <h3 className="text-[11px] font-bold text-gray-200 mb-0.5">
-              Precise feedback
-            </h3>
+            <h3 className="text-[11px] font-bold text-gray-200 mb-0.5">Precise feedback</h3>
             <p className="text-[9px] text-gray-400">
               Frame-accurate point coordinates pin annotation
             </p>
@@ -281,10 +271,7 @@ export default function App() {
         className="h-full w-full shrink-0 snap-start flex flex-col justify-between relative bg-black/20 border-t border-[#E6C280]/15 pt-20"
         id="features-page"
       >
-        <section
-          className="flex-1 flex flex-col justify-start py-2"
-          id="demo-workspace"
-        >
+        <section className="flex-1 flex flex-col justify-start py-2" id="demo-workspace">
           <div className="max-w-6xl mx-auto px-4 w-full">
             {/* Redesigned themed section header to match Hero badge */}
             <div className="flex flex-col items-center mb-8">
