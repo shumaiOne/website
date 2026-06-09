@@ -1,46 +1,43 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import React, { useState } from "react";
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import React, { useState } from 'react';
 
 const SHOWCASE_TABS = [
   {
-    id: "files" as const,
-    label: "Files & Assets",
+    id: 'files' as const,
+    label: 'Files & Assets',
     description:
-      "Centralized asset management for organizing high-fidelity media, brand guidelines, and storyboards.",
-    image: "/list-example.webp",
+      'Centralized asset management for organizing high-fidelity media, brand guidelines, and storyboards.',
+    image: '/list-example.webp',
   },
   {
-    id: "review" as const,
-    label: "Precise feedback",
+    id: 'review' as const,
+    label: 'Precise feedback',
     description:
-      "Frame-accurate visual review canvas with coordinate-based annotations for clear creative direction.",
-    image: "/comment-example.webp",
+      'Frame-accurate visual review canvas with coordinate-based annotations for clear creative direction.',
+    image: '/comment-example.webp',
   },
   {
-    id: "agent" as const,
-    label: "Shumai Agent",
+    id: 'agent' as const,
+    label: 'Shumai Agent',
     description:
-      "AI-powered co-production assistant for automated layout auditing and creative recommendations.",
-    image: "/agent-example.webp",
+      'AI-powered co-production assistant for automated layout auditing and creative recommendations.',
+    image: '/agent-example.webp',
   },
 ];
 
 export default function InteractiveShowcase() {
-  const [activeTab, setActiveTab] = useState<"files" | "review" | "agent">(
-    "files",
-  );
+  const [activeTab, setActiveTab] = useState<'files' | 'review' | 'agent'>('files');
 
   const currentIndex = SHOWCASE_TABS.findIndex((t) => t.id === activeTab);
   const currentTabData = SHOWCASE_TABS[currentIndex];
 
-  const handleTabChange = (tabId: "files" | "review" | "agent") => {
+  const handleTabChange = (tabId: 'files' | 'review' | 'agent') => {
     setActiveTab(tabId);
   };
 
   const handlePrev = () => {
-    const nextIndex =
-      (currentIndex - 1 + SHOWCASE_TABS.length) % SHOWCASE_TABS.length;
+    const nextIndex = (currentIndex - 1 + SHOWCASE_TABS.length) % SHOWCASE_TABS.length;
     setActiveTab(SHOWCASE_TABS[nextIndex].id);
   };
 
@@ -50,10 +47,7 @@ export default function InteractiveShowcase() {
   };
 
   return (
-    <div
-      className="w-full flex flex-col pt-8 pb-16"
-      id="interactive-showcase-box"
-    >
+    <div className="w-full flex flex-col" id="interactive-showcase-box">
       {/* Main Presentation Container */}
       <div className="w-full max-w-6xl mx-auto px-4 relative">
         {/* CAROUSEL VIEWPORT WITH NAVIGATION ARROWS */}
@@ -104,18 +98,14 @@ export default function InteractiveShowcase() {
               >
                 <h3
                   className={`text-base md:text-lg font-serif font-bold mb-2 transition-colors duration-300 ${
-                    isActive
-                      ? "text-white"
-                      : "text-white/30 group-hover:text-white/60"
+                    isActive ? 'text-white' : 'text-white/30 group-hover:text-white/60'
                   }`}
                 >
                   {tab.label}
                 </h3>
                 <p
                   className={`text-xs md:text-sm leading-relaxed transition-colors duration-300 ${
-                    isActive
-                      ? "text-gray-300"
-                      : "text-gray-300/20 group-hover:text-gray-300/50"
+                    isActive ? 'text-gray-300' : 'text-gray-300/20 group-hover:text-gray-300/50'
                   }`}
                 >
                   {tab.description}

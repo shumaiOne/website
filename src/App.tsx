@@ -67,7 +67,7 @@ export default function App() {
       </header>
 
       {/* HERO SECTION */}
-      <section className="min-h-screen lg:h-screen flex flex-col justify-between pt-24 pb-6 px-4 max-w-5xl mx-auto relative z-10">
+      <section className="h-[100dvh] w-full shrink-0 snap-start flex flex-col justify-between pt-24 pb-6 px-4 max-w-5xl mx-auto relative z-10">
         {/* Main Content Area: Centered layout */}
         <div className="flex-1 flex flex-col items-center justify-center w-full max-w-4xl mx-auto text-center py-2 md:py-4">
           {/* Animated badge for app identity with yellow border */}
