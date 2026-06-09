@@ -18,14 +18,14 @@ export default function App() {
   // Scroll to workspace demo helper
   const scrollToDemo = (e: React.MouseEvent) => {
     e.preventDefault();
-    const element = document.getElementById('demo-workspace');
+    const element = document.getElementById('features-page');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
   return (
-    <div className="chinese-lattice min-h-screen text-gray-100 font-sans selection:bg-[#E6C280] selection:text-[#5C1D24] relative overflow-x-hidden">
+    <div className="chinese-lattice h-full w-full overflow-y-auto overflow-x-hidden snap-y snap-mandatory scroll-smooth text-gray-100 font-sans selection:bg-[#E6C280] selection:text-[#5C1D24] relative">
       {/* Background Soft Ambient Light Blobs */}
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#8B1C26]/20 rounded-full blur-[120px] pointer-events-none select-none" />
       <div className="absolute top-[800px] right-10 w-[600px] h-[600px] bg-[#E6C280]/5 rounded-full blur-[150px] pointer-events-none select-none" />
@@ -66,8 +66,8 @@ export default function App() {
         </div>
       </header>
 
-      {/* HERO SECTION */}
-      <section className="h-[100dvh] w-full shrink-0 snap-start flex flex-col justify-between pt-24 pb-6 px-4 max-w-5xl mx-auto relative z-10">
+      {/* HERO SECTION (Page 1) */}
+      <section className="h-full w-full shrink-0 snap-start flex flex-col justify-between pt-24 pb-6 px-4 max-w-5xl mx-auto relative z-10">
         {/* Main Content Area: Centered layout */}
         <div className="flex-1 flex flex-col items-center justify-center w-full max-w-4xl mx-auto text-center py-2 md:py-4">
           {/* Animated badge for app identity with yellow border */}
@@ -210,74 +210,84 @@ export default function App() {
           className="w-full grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-[#E6C280]/15 pt-4 pb-0 mb-0"
           id="features-preview"
         >
-          <div className="flex flex-col items-center p-1 text-center group">
-            <div className="w-9 h-9 rounded-full bg-[#5C1D24] border border-[#E6C280]/30 text-[#E6C280] flex items-center justify-center mb-2 group-hover:bg-[#E6C280] group-hover:text-[#5C1D24] transition-all">
+          <button
+            type="button"
+            className="flex flex-col items-center p-1 text-center group"
+            onClick={scrollToDemo}
+          >
+            <div className="w-9 h-9 rounded-full bg-[#5C1D24] border border-[#E6C280]/30 text-[#E6C280] flex items-center justify-center mb-2 group-hover:bg-[#E6C280] group-hover:text-[#5C1D24] transition-all cursor-pointer">
               <Upload className="w-4 h-4" />
             </div>
             <h3 className="text-[11px] font-bold text-gray-200 mb-0.5">Upload files</h3>
             <p className="text-[9px] text-gray-400">
               High-fidelity videography and creative templates
             </p>
-          </div>
+          </button>
 
-          <div className="flex flex-col items-center p-1 text-center group">
-            <div className="w-9 h-9 rounded-full bg-[#5C1D24] border border-[#E6C280]/30 text-[#E6C280] flex items-center justify-center mb-2 group-hover:bg-[#E6C280] group-hover:text-[#5C1D24] transition-all">
+          <button
+            type="button"
+            className="flex flex-col items-center p-1 text-center group"
+            onClick={scrollToDemo}
+          >
+            <div className="w-9 h-9 rounded-full bg-[#5C1D24] border border-[#E6C280]/30 text-[#E6C280] flex items-center justify-center mb-2 group-hover:bg-[#E6C280] group-hover:text-[#5C1D24] transition-all cursor-pointer">
               <FolderKanban className="w-4 h-4" />
             </div>
             <h3 className="text-[11px] font-bold text-gray-200 mb-0.5">Manage projects</h3>
             <p className="text-[9px] text-gray-400">Unified repositories and asset organization</p>
-          </div>
+          </button>
 
-          <div className="flex flex-col items-center p-1 text-center group">
-            <div className="w-9 h-9 rounded-full bg-[#5C1D24] border border-[#E6C280]/30 text-[#E6C280] flex items-center justify-center mb-2 group-hover:bg-[#E6C280] group-hover:text-[#5C1D24] transition-all">
+          <button
+            type="button"
+            className="flex flex-col items-center p-1 text-center group"
+            onClick={scrollToDemo}
+          >
+            <div className="w-9 h-9 rounded-full bg-[#5C1D24] border border-[#E6C280]/30 text-[#E6C280] flex items-center justify-center mb-2 group-hover:bg-[#E6C280] group-hover:text-[#5C1D24] transition-all cursor-pointer">
               <Sparkles className="w-4 h-4" />
             </div>
             <h3 className="text-[11px] font-bold text-gray-200 mb-0.5">Agent Co-Production</h3>
             <p className="text-[9px] text-gray-400">
               Automated co-production guidance & layout audits
             </p>
-          </div>
+          </button>
 
-          <div className="flex flex-col items-center p-1 text-center group">
-            <div className="w-9 h-9 rounded-full bg-[#5C1D24] border border-[#E6C280]/30 text-[#E6C280] flex items-center justify-center mb-2 group-hover:bg-[#E6C280] group-hover:text-[#5C1D24] transition-all">
+          <button
+            type="button"
+            className="flex flex-col items-center p-1 text-center group"
+            onClick={scrollToDemo}
+          >
+            <div className="w-9 h-9 rounded-full bg-[#5C1D24] border border-[#E6C280]/30 text-[#E6C280] flex items-center justify-center mb-2 group-hover:bg-[#E6C280] group-hover:text-[#5C1D24] transition-all cursor-pointer">
               <MessageSquare className="w-4 h-4" />
             </div>
             <h3 className="text-[11px] font-bold text-gray-200 mb-0.5">Precise feedback</h3>
             <p className="text-[9px] text-gray-400">
               Frame-accurate point coordinates pin annotation
             </p>
-          </div>
+          </button>
         </div>
       </section>
 
-      {/* WORKSPACE DEMO PREVIEW SECTION */}
-      <section
-        className="py-16 bg-black/40 border-t border-[#E6C280]/15 relative"
-        id="demo-workspace"
+      {/* WORKSPACE DEMO PREVIEW SECTION (Page 2) */}
+      <div
+        className="h-full w-full shrink-0 snap-start flex flex-col justify-between relative bg-black/40 border-t border-[#E6C280]/15 pt-20"
+        id="features-page"
       >
-        <div className="max-w-6xl mx-auto px-4 mb-2">
-          {/* Section banner */}
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-1.5 p-1 px-3 mb-3 rounded-full bg-[#5C1D24]/80 border border-[#E6C280]/40 text-[#E6C280] font-mono text-[9px] uppercase tracking-widest">
-              <Sparkles className="w-3 h-3 text-[#E6C280]" />
-              <span>Shumai Preview</span>
+        <section className="flex-1 flex flex-col justify-center py-4" id="demo-workspace">
+          <div className="max-w-6xl mx-auto px-4 w-full">
+            {/* Section banner */}
+            <div className="text-center max-w-2xl mx-auto mb-6">
+              <h2 className="text-2xl md:text-4xl font-serif text-white font-black">
+                shumai features
+              </h2>
             </div>
-            <h2 className="text-2xl md:text-4xl font-serif text-white font-black mb-3">
-              Experience shumai in Action
-            </h2>
-            <p className="text-xs text-gray-300 leading-relaxed">
-              Explore shumai's high-fidelity creative workflow, precise coordinate-based designer
-              annotations, and advanced AI agent coordination layouts.
-            </p>
           </div>
-        </div>
 
-        {/* Render interactive applet showcase simulator */}
-        <InteractiveShowcase />
-      </section>
+          {/* Render interactive applet showcase simulator */}
+          <InteractiveShowcase />
+        </section>
 
-      {/* FOOTER */}
-      <Footer />
+        {/* FOOTER */}
+        <Footer />
+      </div>
     </div>
   );
 }
