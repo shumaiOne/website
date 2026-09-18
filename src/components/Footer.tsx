@@ -19,7 +19,7 @@ export default function Footer() {
 
       <div className="max-w-6xl mx-auto relative z-10 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
         <p className="text-xs text-gray-400 font-mono tracking-wide">
-          © 2026 shumai.one — Open-source creative workspace made by{' '}
+          © {new Date().getFullYear()} shumai.one — Open-source creative workspace made by{' '}
           <a
             href="https://github.com/Yiling-J"
             target="_blank"

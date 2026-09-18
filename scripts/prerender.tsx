@@ -54,8 +54,9 @@ async function prerender() {
     // Render component to string
     const renderedMarkup = renderToString(route.component);
 
-    // Inject prerendered content into #root
-    html = html.replace('<div id="root"></div>', `<div id="root">${renderedMarkup}</div>`);
+    // Inject prerendered content into #root with page marker if needed
+    const rootTag = route.path === '/404' ? '<div id="root" data-page="404">' : '<div id="root">';
+    html = html.replace('<div id="root"></div>', `${rootTag}${renderedMarkup}</div>`);
 
     // Customize title if specified
     if (route.title) {
@@ -70,9 +71,43 @@ async function prerender() {
       );
     }
 
-    // Add noindex for 404 and remove canonical
+    // 404 / noindex specific cleanups: remove canonical, remove schema, update social metadata
     if (route.noindex) {
-      html = html.replace(/<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i, '');
+      // Remove canonical tag
+      html = html.replace(/<link\s+rel="canonical"\s+href=".*?"\s*\/?>\s*/i, '');
+
+      // Remove homepage structured data (JSON-LD)
+      html = html.replace(/<script\s+type="application\/ld\+json">[\s\S]*?<\/script>\s*/i, '');
+
+      // Remove og:url and twitter:url
+      html = html.replace(/<meta\s+property="og:url"\s+content=".*?"\s*\/?>\s*/i, '');
+      html = html.replace(/<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>\s*/i, '');
+
+      // Update og:title and twitter:title to match 404 title
+      if (route.title) {
+        html = html.replace(
+          /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i,
+          `<meta property="og:title" content="${route.title}" />`,
+        );
+        html = html.replace(
+          /<meta\s+name="twitter:title"\s+content=".*?"\s*\/?>/i,
+          `<meta name="twitter:title" content="${route.title}" />`,
+        );
+      }
+
+      // Update og:description and twitter:description to match 404 description
+      if (route.description) {
+        html = html.replace(
+          /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i,
+          `<meta property="og:description" content="${route.description}" />`,
+        );
+        html = html.replace(
+          /<meta\s+name="twitter:description"\s+content=".*?"\s*\/?>/i,
+          `<meta name="twitter:description" content="${route.description}" />`,
+        );
+      }
+
+      // Add noindex directive
       html = html.replace(
         '</head>',
         '    <meta name="robots" content="noindex, nofollow" />\n  </head>',

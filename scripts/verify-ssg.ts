@@ -141,6 +141,22 @@ function verify() {
       !notFoundHtml.includes('<link rel="canonical"'),
       'dist/404.html does not contain a canonical tag',
     );
+    assert(
+      notFoundHtml.includes('id="root" data-page="404"'),
+      'dist/404.html contains data-page="404" marker for client hydration',
+    );
+    assert(
+      !notFoundHtml.includes('SoftwareApplication'),
+      'dist/404.html does not contain SoftwareApplication JSON-LD schema',
+    );
+    assert(
+      notFoundHtml.includes('property="og:title" content="404 — Page Not Found | Shumai"'),
+      'dist/404.html has dedicated 404 Open Graph title',
+    );
+    assert(
+      !notFoundHtml.includes('property="og:url"'),
+      'dist/404.html does not advertise homepage in og:url',
+    );
   }
 
   if (errors > 0) {
