@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build",
+    "build": "vite build && bun run scripts/prerender.tsx",
     "preview": "bun run build && wrangler dev",
     "clean": "rm -rf dist server.js",
     "lint": "biome lint .",
@@ -14,7 +14,8 @@
     "check": "biome check .",
     "check:write": "biome check --write .",
     "typecheck": "tsc --noEmit",
-    "validate": "biome check . && bun run typecheck && bun run build",
+    "verify:ssg": "bun run scripts/verify-ssg.ts",
+    "validate": "biome check . && bun run typecheck && bun run build && bun run verify:ssg",
     "deploy": "bun run build && wrangler deploy"
   },
   "dependencies": {

@@ -33,10 +33,10 @@ export default function App() {
       {/* FIXED NAVIGATION HEADER */}
       <header className="fixed top-0 left-0 right-0 z-40 bg-[#1A0609]/95 border-b border-[#E6C280]/15 backdrop-blur-md py-3.5 shadow-xl">
         <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
-          {/* Logo block */}
-          <div className="flex items-center gap-3">
+          {/* Logo block with link */}
+          <a href="/" aria-label="Shumai Homepage" className="flex items-center gap-3 group/logo">
             {/* Custom vector logo */}
-            <ShumaiLogo className="w-8 h-8 shadow-md" />
+            <ShumaiLogo className="w-8 h-8 shadow-md group-hover/logo:scale-105 transition-transform" />
 
             {/* App name with elegant Chinese Border styling (corners only) */}
             <div className="relative group h-[28.8px] flex items-center">
@@ -49,7 +49,7 @@ export default function App() {
                 shumai
               </span>
             </div>
-          </div>
+          </a>
 
           {/* Action trigger button */}
           <div className="flex items-center gap-3">
@@ -57,6 +57,7 @@ export default function App() {
               href="https://github.com/shumaiOne/shumai"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="View Shumai open-source repository on GitHub"
               className="px-4 py-1.5 text-xs font-bold text-[#5C1D24] bg-gradient-to-r from-[#E6C280] to-[#C59B27] rounded shadow hover:brightness-110 active:scale-95 transition-all text-center tracking-wide flex items-center gap-1.5"
             >
               <Github className="w-3.5 h-3.5" />
@@ -72,7 +73,7 @@ export default function App() {
         <div className="flex-1 flex flex-col items-center justify-center w-full max-w-4xl mx-auto text-center py-2 md:py-4">
           {/* Animated badge for app identity with yellow border */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="mb-4 relative"
@@ -133,34 +134,35 @@ export default function App() {
             </div>
           </motion.div>
 
-          {/* Hero title from request */}
+          {/* Hero title */}
           <motion.h1
-            initial={{ opacity: 0, y: 15 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-3xl md:text-5xl font-serif font-black tracking-normal text-white leading-[1.3] md:leading-[1.4] max-w-3xl mb-6 font-display"
           >
-            One platform for all your <br className="hidden sm:inline" />
+            The open-source Frame.io alternative for all your <br className="hidden sm:inline" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E6C280] via-[#FADE9C] to-[#E6C280] underline decoration-[#E6C280]/30 underline-offset-8">
               creative work.
             </span>
           </motion.h1>
 
-          {/* Description from request */}
+          {/* Core positioning description */}
           <motion.p
-            initial={{ opacity: 0, y: 15 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xs md:text-sm text-gray-300 max-w-2xl leading-relaxed mb-6 font-sans"
           >
-            Upload creative files, manage projects, and collaborate with teammates and Shumai Agent
-            in one unified workspace built for precise feedback, shared progress, and open source
-            flexibility.
+            Shumai is an open-source, self-hosted Frame.io alternative for creative teams. Manage
+            creative assets, review video and images with precise frame-accurate feedback,
+            collaborate with teammates and Shumai Agent, and share work with clients in one unified
+            workspace.
           </motion.p>
 
           {/* REQUIRED TRIPLE ACTION BUTTON GROUP WITH SLASH-DIVIDED DESIGN */}
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-row items-center justify-center font-mono text-xs sm:text-sm uppercase tracking-widest text-[#E6C280] mb-2 select-none"
@@ -169,6 +171,7 @@ export default function App() {
               href="https://staging.shumai.one"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Try Shumai live demo"
               className="hover:text-white transition-all px-2.5 sm:px-3.5 flex items-center gap-1.5 cursor-pointer font-bold active:scale-95"
             >
               <Play className="w-3.5 h-3.5 stroke-current" />
@@ -183,6 +186,7 @@ export default function App() {
               href="https://docs.shumai.one"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Read Shumai documentation"
               className="hover:text-white transition-all px-2.5 sm:px-3.5 flex items-center gap-1.5 cursor-pointer font-bold active:scale-95"
             >
               <BookOpen className="w-3.5 h-3.5" />
@@ -197,6 +201,7 @@ export default function App() {
               href="https://github.com/shumaiOne/shumai"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="View Shumai open source repository on GitHub"
               className="hover:text-white transition-all px-2.5 sm:px-3.5 flex items-center gap-1.5 cursor-pointer font-bold active:scale-95"
             >
               <Github className="w-3.5 h-3.5" />
@@ -206,6 +211,7 @@ export default function App() {
         </div>
 
         {/* Footer Area: Visual indicators for "Design Sense" detail */}
+        <h2 className="sr-only">Key Creative Capabilities</h2>
         <div
           className="w-full grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-[#E6C280]/15 pt-4 pb-0 mb-0"
           id="features-preview"

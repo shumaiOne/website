@@ -3,7 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>shumai — Creative Workspace</title>
+    <title>Shumai — Open-Source Frame.io Alternative</title>
+    <meta
+      name="description"
+      content="Shumai is an open-source, self-hosted Frame.io alternative for creative teams to manage media, review work, share assets, and collaborate."
+    />
+    <link rel="canonical" href="https://shumai.one/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Shumai" />
+    <meta property="og:url" content="https://shumai.one/" />
+    <meta property="og:title" content="Shumai — Open-Source Frame.io Alternative" />
+    <meta
+      property="og:description"
+      content="Shumai is an open-source, self-hosted Frame.io alternative for creative teams to manage media, review work, share assets, and collaborate."
+    />
+    <meta property="og:image" content="https://shumai.one/list-example.webp" />
+    <meta property="og:image:width" content="3840" />
+    <meta property="og:image:height" content="2160" />
+    <meta property="og:image:alt" content="Shumai creative asset management and media review platform" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://shumai.one/" />
+    <meta name="twitter:title" content="Shumai — Open-Source Frame.io Alternative" />
+    <meta
+      name="twitter:description"
+      content="Shumai is an open-source, self-hosted Frame.io alternative for creative teams to manage media, review work, share assets, and collaborate."
+    />
+    <meta name="twitter:image" content="https://shumai.one/list-example.webp" />
+    <meta name="twitter:image:alt" content="Shumai creative asset management and media review platform" />
+
+    <!-- Icons & Manifest -->
     <link rel="apple-touch-icon" sizes="57x57" href="/favicon-57x57.png" />
     <link rel="apple-touch-icon" sizes="60x60" href="/favicon-60x60.png" />
     <link rel="apple-touch-icon" sizes="72x72" href="/favicon-72x72.png" />
@@ -21,6 +53,39 @@
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="msapplication-TileImage" content="/favicon-144x144.png" />
     <meta name="theme-color" content="#ffffff" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://shumai.one/#software",
+          "name": "Shumai",
+          "url": "https://shumai.one/",
+          "description": "Shumai is an open-source, self-hosted Frame.io alternative for creative teams to manage media, review work, share assets, and collaborate.",
+          "applicationCategory": "MultimediaApplication",
+          "operatingSystem": "Web",
+          "isAccessibleForFree": true,
+          "codeRepository": "https://github.com/shumaiOne/shumai",
+          "publisher": {
+            "@id": "https://shumai.one/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://shumai.one/#organization",
+          "name": "Shumai",
+          "url": "https://shumai.one/",
+          "logo": "https://shumai.one/favicon-192x192.png",
+          "sameAs": [
+            "https://github.com/shumaiOne/shumai"
+          ]
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

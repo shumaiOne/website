@@ -9,6 +9,8 @@ const SHOWCASE_TABS = [
     description:
       'Centralized asset management for organizing high-fidelity media, brand guidelines, and storyboards.',
     image: '/list-example.webp',
+    imageAlt:
+      'Shumai creative asset management interface showing project files, media assets, and folders',
   },
   {
     id: 'review' as const,
@@ -16,6 +18,8 @@ const SHOWCASE_TABS = [
     description:
       'Frame-accurate visual review canvas with coordinate-based annotations for clear creative direction.',
     image: '/comment-example.webp',
+    imageAlt:
+      'Shumai frame-accurate video and media review canvas with pinpoint feedback annotations',
   },
   {
     id: 'agent' as const,
@@ -23,6 +27,7 @@ const SHOWCASE_TABS = [
     description:
       'AI-powered co-production assistant for automated tasks and creative recommendations.',
     image: '/agent-example.webp',
+    imageAlt: 'Shumai Agent AI co-production assistant analyzing creative workflow and tasks',
   },
 ];
 
@@ -71,7 +76,7 @@ export default function InteractiveShowcase() {
 
           {/* IMAGE VIEWPORT */}
           <div className="bg-[#1C080B]/40 border border-[#E6C280]/15 rounded-2xl overflow-hidden aspect-video relative shadow-2xl w-full">
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait" initial={false}>
               <motion.img
                 key={activeTab}
                 initial={{ opacity: 0 }}
@@ -79,7 +84,9 @@ export default function InteractiveShowcase() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
                 src={currentTabData.image}
-                alt={currentTabData.label}
+                alt={currentTabData.imageAlt}
+                width={3840}
+                height={2160}
                 className="absolute inset-0 w-full h-full object-cover"
               />
             </AnimatePresence>
