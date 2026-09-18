@@ -155,8 +155,7 @@ export default function App() {
             className="text-xs md:text-sm text-gray-300 max-w-2xl leading-relaxed mb-6 font-sans"
           >
             Shumai is an open-source, self-hosted Frame.io alternative for creative teams. Manage
-            creative assets, review video and images with precise frame-accurate feedback,
-            collaborate with teammates and Shumai Agent, and share work with clients in one unified
+            assets, review media with frame-accurate feedback, and collaborate in one unified
             workspace.
           </motion.p>
 
