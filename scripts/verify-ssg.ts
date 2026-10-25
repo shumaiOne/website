@@ -1,170 +1,226 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { FEATURE_PAGES } from '../src/content/features';
+import { HOME_FAQS, HOME_SECTIONS } from '../src/content/home';
+import { ROUTES } from '../src/content/routes';
+import { SCREENS } from '../src/content/screens';
+import { DEMO_URL, DOCS_URL, GITHUB_URL } from '../src/content/site';
+import type { RouteMeta } from '../src/types';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const rootDir = path.resolve(__dirname, '..');
-const distDir = path.resolve(rootDir, 'dist');
+const distDir = path.resolve(__dirname, '..', 'dist');
+const SITE_URL = 'https://shumai.one';
 
-function verify() {
-  console.log('[SSG Verify] Starting validation of generated static assets...');
-  let errors = 0;
+let errors = 0;
 
-  function assert(condition: boolean, description: string) {
-    if (!condition) {
-      console.error(`[SSG Verify] ❌ FAILED: ${description}`);
-      errors++;
-    } else {
-      console.log(`[SSG Verify] ✓ PASSED: ${description}`);
-    }
-  }
-
-  // 1. Verify index.html exists
-  const indexPath = path.resolve(distDir, 'index.html');
-  assert(fs.existsSync(indexPath), 'dist/index.html exists');
-
-  const indexHtml = fs.readFileSync(indexPath, 'utf-8');
-
-  // 2. Verify title and metadata
-  assert(
-    indexHtml.includes('<title>Shumai — Open-Source Frame.io Alternative</title>'),
-    'index.html contains expected SEO title',
-  );
-  assert(
-    indexHtml.includes('name="description"') && indexHtml.includes('Frame.io alternative'),
-    'index.html contains meta description with Frame.io alternative',
-  );
-  assert(
-    indexHtml.includes('<link rel="canonical" href="https://shumai.one/" />'),
-    'index.html contains canonical URL link',
-  );
-
-  // 3. Verify Open Graph and Twitter
-  assert(
-    indexHtml.includes('property="og:title"') &&
-      indexHtml.includes('property="og:description"') &&
-      indexHtml.includes('property="og:image"') &&
-      indexHtml.includes('https://shumai.one/list-example.webp'),
-    'index.html contains complete Open Graph metadata',
-  );
-  assert(
-    indexHtml.includes('name="twitter:card" content="summary_large_image"') &&
-      indexHtml.includes('name="twitter:image" content="https://shumai.one/list-example.webp"'),
-    'index.html contains complete Twitter card metadata',
-  );
-
-  // 4. Verify JSON-LD
-  assert(
-    indexHtml.includes('"@type":"SoftwareApplication"') ||
-      indexHtml.includes('"@type": "SoftwareApplication"'),
-    'index.html contains SoftwareApplication JSON-LD schema',
-  );
-  assert(
-    indexHtml.includes('"@type":"Organization"') || indexHtml.includes('"@type": "Organization"'),
-    'index.html contains Organization JSON-LD schema',
-  );
-
-  // 5. Verify prerendered Hero content
-  assert(
-    indexHtml.includes('The open-source Frame.io alternative for all your'),
-    'dist/index.html contains rendered H1 heading in raw HTML',
-  );
-  assert(
-    indexHtml.includes(
-      'Shumai is an open-source, self-hosted Frame.io alternative for creative teams',
-    ),
-    'dist/index.html contains rendered hero descriptive paragraph in raw HTML',
-  );
-
-  // 6. Verify crucial no-hidden-opacity rule on hero
-  const h1Match = indexHtml.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
-  if (h1Match) {
-    const h1Tag = h1Match[0];
-    assert(
-      !h1Tag.includes('opacity:0') && !h1Tag.includes('opacity: 0'),
-      'H1 is NOT hidden with opacity:0',
-    );
+function assert(condition: boolean, description: string): void {
+  if (condition) {
+    console.log(`[SSG Verify] ✓ PASSED: ${description}`);
   } else {
-    assert(false, 'H1 tag not found in dist/index.html');
+    console.error(`[SSG Verify] ❌ FAILED: ${description}`);
+    errors++;
   }
+}
 
-  // 7. Verify Links
+const read = (file: string): string | null => {
+  const full = path.resolve(distDir, file);
+  return fs.existsSync(full) ? fs.readFileSync(full, 'utf-8') : null;
+};
+
+/** Escape a value the same way attribute content is escaped in the generated head. */
+const escapeAttr = (value: string): string =>
+  value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+/** Decode the entities React emits so rendered text can be compared with source strings. */
+const decode = (html: string): string =>
+  html
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;/g, "'")
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&nbsp;/g, ' ');
+
+/** Plain text of an HTML fragment with collapsed whitespace. */
+const textOf = (html: string): string =>
+  decode(html.replace(/<!--[\s\S]*?-->/g, '').replace(/<[^>]+>/g, ' '))
+    .replace(/\s+/g, ' ')
+    .trim();
+
+const bodyText = (html: string): string => {
+  const start = html.indexOf('<body');
+  return textOf(start >= 0 ? html.slice(start) : html);
+};
+
+const absoluteUrl = (p: string): string => (p === '/' ? `${SITE_URL}/` : `${SITE_URL}${p}`);
+
+/** JSON-LD @types present in the page's structured data. */
+function jsonLdTypes(html: string): string[] {
+  const match = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
+  if (!match) return [];
+  try {
+    const data = JSON.parse(match[1]) as { '@graph'?: { '@type': string }[] };
+    return (data['@graph'] ?? []).map((node) => node['@type']);
+  } catch {
+    return ['<invalid json>'];
+  }
+}
+
+/** Headings, sections, and FAQs each route must ship in its static HTML. */
+function expectedContent(route: RouteMeta): { h1: string; headings: string[]; faqs: string[] } {
+  if (route.key === 'home') {
+    return {
+      h1: 'The open-source Frame.io alternative for all your creative work.',
+      headings: HOME_SECTIONS.map((s) => s.title),
+      faqs: HOME_FAQS.map((f) => f.question),
+    };
+  }
+  const page = FEATURE_PAGES[route.key];
+  return {
+    h1: page.h1,
+    headings: page.details.map((d) => d.title),
+    faqs: page.faqs.map((f) => f.question),
+  };
+}
+
+function verifyRoute(route: RouteMeta): void {
+  const label = route.outFile;
+  const html = read(route.outFile);
+  assert(html !== null, `${label} exists`);
+  if (html === null) return;
+
+  const url = absoluteUrl(route.path);
+  const ogImage = `${SITE_URL}${route.ogImage}`;
+
+  // Head metadata
+  assert(html.includes(`<title>${escapeAttr(route.title)}</title>`), `${label} has its SEO title`);
   assert(
-    indexHtml.includes('https://github.com/shumaiOne/shumai'),
-    'dist/index.html contains crawlable link to GitHub',
+    html.includes(`<meta name="description" content="${escapeAttr(route.description)}" />`),
+    `${label} has its meta description`,
+  );
+  assert(html.includes(`<link rel="canonical" href="${url}" />`), `${label} has canonical ${url}`);
+  assert(
+    (html.match(/<link rel="canonical"/g) ?? []).length === 1,
+    `${label} has exactly one canonical`,
   );
   assert(
-    indexHtml.includes('https://docs.shumai.one'),
-    'dist/index.html contains crawlable link to Documentation',
+    html.includes(`<meta property="og:url" content="${url}" />`) &&
+      html.includes(`<meta property="og:title" content="${escapeAttr(route.title)}" />`) &&
+      html.includes(`<meta property="og:image" content="${ogImage}" />`),
+    `${label} has Open Graph url, title, and image`,
   );
-  assert(indexHtml.includes('https://staging.shumai.one'), 'dist/index.html contains link to Demo');
-
-  // 8. Verify Image Alt Text
   assert(
-    indexHtml.includes(
-      'alt="Shumai creative asset management interface showing project files, media assets, and folders"',
-    ),
-    'dist/index.html contains descriptive image alt attribute',
+    html.includes('<meta name="twitter:card" content="summary_large_image" />') &&
+      html.includes(`<meta name="twitter:image" content="${ogImage}" />`),
+    `${label} has a Twitter large image card`,
+  );
+  assert(
+    fs.existsSync(path.join(distDir, route.ogImage)),
+    `${label} OG image ${route.ogImage} is shipped`,
   );
 
-  // 9. Verify robots.txt and sitemap.xml
-  const robotsPath = path.resolve(distDir, 'robots.txt');
-  assert(fs.existsSync(robotsPath), 'dist/robots.txt exists');
-  if (fs.existsSync(robotsPath)) {
-    const robotsTxt = fs.readFileSync(robotsPath, 'utf-8');
-    assert(
-      robotsTxt.includes('User-agent: *') &&
-        robotsTxt.includes('Sitemap: https://shumai.one/sitemap.xml'),
-      'robots.txt has expected directives',
-    );
-  }
+  // Structured data
+  const types = jsonLdTypes(html);
+  const requiredTypes =
+    route.key === 'home'
+      ? ['Organization', 'WebSite', 'SoftwareApplication', 'FAQPage']
+      : ['Organization', 'WebPage', 'BreadcrumbList', 'FAQPage'];
+  assert(
+    requiredTypes.every((t) => types.includes(t)),
+    `${label} JSON-LD includes ${requiredTypes.join(', ')}`,
+  );
 
-  const sitemapPath = path.resolve(distDir, 'sitemap.xml');
-  assert(fs.existsSync(sitemapPath), 'dist/sitemap.xml exists');
-  if (fs.existsSync(sitemapPath)) {
-    const sitemapXml = fs.readFileSync(sitemapPath, 'utf-8');
-    assert(sitemapXml.includes('https://shumai.one/'), 'sitemap.xml contains homepage URL');
+  // Prerendered content
+  const { h1, headings, faqs } = expectedContent(route);
+  const h1Tags = html.match(/<h1[^>]*>[\s\S]*?<\/h1>/g) ?? [];
+  assert(h1Tags.length === 1, `${label} has exactly one H1`);
+  if (h1Tags[0]) {
+    assert(textOf(h1Tags[0]) === h1, `${label} H1 reads "${h1}"`);
+    assert(!/opacity:\s*0/.test(h1Tags[0]), `${label} H1 is not hidden with opacity:0`);
   }
+  const text = bodyText(html);
+  const missingHeadings = headings.filter((h) => !text.includes(h));
+  assert(missingHeadings.length === 0, `${label} renders all ${headings.length} section headings`);
+  const missingFaqs = faqs.filter((q) => !text.includes(q));
+  assert(missingFaqs.length === 0, `${label} renders all ${faqs.length} FAQ questions`);
+  for (const missing of [...missingHeadings, ...missingFaqs])
+    console.error(`    missing: ${missing}`);
 
-  // 10. Verify 404.html
-  const notFoundPath = path.resolve(distDir, '404.html');
-  assert(fs.existsSync(notFoundPath), 'dist/404.html exists');
-  if (fs.existsSync(notFoundPath)) {
-    const notFoundHtml = fs.readFileSync(notFoundPath, 'utf-8');
+  // Crawlable links
+  assert(html.includes(GITHUB_URL) && html.includes(DOCS_URL), `${label} links to GitHub and docs`);
+  const internal = ROUTES.filter((r) => r.key !== route.key).filter((r) =>
+    html.includes(`href="${r.path}"`),
+  );
+  assert(
+    internal.length >= 3,
+    `${label} links to at least 3 other site pages (${internal.length})`,
+  );
+}
+
+function verify(): void {
+  console.log('[SSG Verify] Validating generated static pages...');
+
+  for (const route of ROUTES) verifyRoute(route);
+
+  // Home-specific checks
+  const index = read('index.html') ?? '';
+  assert(index.includes(DEMO_URL), 'index.html links to the live demo');
+  assert(
+    index.includes(`alt="${escapeAttr(SCREENS.review.alt)}"`),
+    'index.html has descriptive screenshot alt text',
+  );
+  const allLinked = ROUTES.filter((r) => r.key !== 'home').every((r) =>
+    index.includes(`href="${r.path}"`),
+  );
+  assert(allLinked, 'index.html links to every dedicated page');
+
+  // Screenshots referenced by the content exist
+  const missingScreens = Object.keys(SCREENS).filter(
+    (name) => !fs.existsSync(path.join(distDir, 'screens', `${name}-1600.webp`)),
+  );
+  assert(missingScreens.length === 0, `all screenshots are shipped ${missingScreens.join(', ')}`);
+
+  // robots.txt and sitemap.xml
+  const robots = read('robots.txt');
+  assert(
+    robots?.includes('User-agent: *') === true &&
+      robots.includes(`Sitemap: ${SITE_URL}/sitemap.xml`),
+    'robots.txt allows crawling and points to the sitemap',
+  );
+  const sitemap = read('sitemap.xml') ?? '';
+  const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+  assert(
+    ROUTES.every((r) => sitemapUrls.includes(absoluteUrl(r.path))) &&
+      sitemapUrls.length === ROUTES.length,
+    `sitemap.xml lists exactly the ${ROUTES.length} public pages`,
+  );
+
+  // 404 page
+  const notFound = read('404.html');
+  assert(notFound !== null, '404.html exists');
+  if (notFound !== null) {
     assert(
-      notFoundHtml.includes('Page Not Found') &&
-        notFoundHtml.includes('<meta name="robots" content="noindex, nofollow" />'),
-      'dist/404.html contains 404 heading and noindex meta tag',
+      notFound.includes('Page Not Found') &&
+        notFound.includes('<meta name="robots" content="noindex, nofollow" />'),
+      '404.html has its heading and a noindex robots tag',
     );
+    assert(!notFound.includes('<link rel="canonical"'), '404.html has no canonical tag');
+    assert(!notFound.includes('property="og:url"'), '404.html has no og:url');
+    assert(!notFound.includes('application/ld+json'), '404.html has no JSON-LD');
     assert(
-      !notFoundHtml.includes('<link rel="canonical"'),
-      'dist/404.html does not contain a canonical tag',
-    );
-    assert(
-      notFoundHtml.includes('id="root" data-page="404"'),
-      'dist/404.html contains data-page="404" marker for client hydration',
-    );
-    assert(
-      !notFoundHtml.includes('SoftwareApplication'),
-      'dist/404.html does not contain SoftwareApplication JSON-LD schema',
-    );
-    assert(
-      notFoundHtml.includes('property="og:title" content="404 — Page Not Found | Shumai"'),
-      'dist/404.html has dedicated 404 Open Graph title',
-    );
-    assert(
-      !notFoundHtml.includes('property="og:url"'),
-      'dist/404.html does not advertise homepage in og:url',
+      notFound.includes('id="root" data-page="404"'),
+      '404.html has the data-page="404" hydration marker',
     );
   }
 
   if (errors > 0) {
     console.error(`\n[SSG Verify] ❌ Verification failed with ${errors} error(s).`);
     process.exit(1);
-  } else {
-    console.log('\n[SSG Verify] ✅ All SSG and SEO assertions passed perfectly!');
   }
+  console.log('\n[SSG Verify] ✅ All SSG and SEO assertions passed.');
 }
 
 verify();

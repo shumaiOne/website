@@ -12,12 +12,17 @@ This project is built using React 19, Vite, Tailwind CSS, and TypeScript, runnin
    ```bash
    bun install
    ```
-2. **Configure environment**:
-   Set `GEMINI_API_KEY` in `.env.local`
-3. **Start local development server**:
+2. **Start local development server**:
    ```bash
    bun run dev
    ```
+
+### Pages
+
+All pages are prerendered to static HTML at build time (`scripts/prerender.tsx`). Page
+routes, titles, and descriptions live in `src/content/routes.ts`; feature page copy lives in
+`src/content/`. Product screenshots are stored in `public/screens/` as WebP at 960, 1600,
+and 2400 px widths.
 
 ### Quality Assurance
 

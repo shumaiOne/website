@@ -5,6 +5,8 @@ import type React from 'react';
 import { renderToString } from 'react-dom/server';
 import App from '../src/App.tsx';
 import { NotFound } from '../src/components/NotFound.tsx';
+import { ROUTES } from '../src/content/routes.ts';
+import { absoluteUrl, buildHeadTags, buildStructuredData } from '../src/content/seo.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,30 +14,36 @@ const rootDir = path.resolve(__dirname, '..');
 const distDir = path.resolve(rootDir, 'dist');
 const templatePath = path.resolve(distDir, 'index.html');
 
-interface RouteConfig {
-  path: string;
+const SEO_BLOCK = /<!-- SEO:START[\s\S]*?<!-- SEO:END -->/;
+
+interface PageJob {
+  label: string;
   outFile: string;
-  title?: string;
-  description?: string;
-  noindex?: boolean;
+  rootAttrs: string;
+  head: string;
   component: React.ReactElement;
 }
 
-const routes: RouteConfig[] = [
-  {
-    path: '/',
-    outFile: path.resolve(distDir, 'index.html'),
-    component: <App />,
-  },
-  {
-    path: '/404',
-    outFile: path.resolve(distDir, '404.html'),
-    title: '404 — Page Not Found | Shumai',
-    description: 'The page you requested could not be found.',
-    noindex: true,
-    component: <NotFound />,
-  },
-];
+function render(template: string, job: PageJob): string {
+  if (!SEO_BLOCK.test(template)) {
+    throw new Error('SEO block markers not found in dist/index.html');
+  }
+  const markup = renderToString(job.component);
+  return template
+    .replace(SEO_BLOCK, job.head)
+    .replace('<div id="root"></div>', `<div id="root"${job.rootAttrs}>${markup}</div>`);
+}
+
+function writeSitemap() {
+  const today = new Date().toISOString().slice(0, 10);
+  const urls = ROUTES.map(
+    (r) =>
+      `  <url>\n    <loc>${absoluteUrl(r.path)}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${r.key === 'home' ? 'weekly' : 'monthly'}</changefreq>\n    <priority>${r.key === 'home' ? '1.0' : '0.8'}</priority>\n  </url>`,
+  ).join('\n');
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+  fs.writeFileSync(path.resolve(distDir, 'sitemap.xml'), xml, 'utf-8');
+  console.log(`[SSG]   ✓ Wrote sitemap.xml with ${ROUTES.length} URLs`);
+}
 
 async function prerender() {
   if (!fs.existsSync(templatePath)) {
@@ -45,89 +53,44 @@ async function prerender() {
 
   const template = fs.readFileSync(templatePath, 'utf-8');
 
-  console.log(`[SSG] Starting prerendering for ${routes.length} routes...`);
+  const jobs: PageJob[] = ROUTES.map((route) => ({
+    label: route.path,
+    outFile: route.outFile,
+    rootAttrs: ` data-page="${route.key}"`,
+    head: `${buildHeadTags(route)}\n    ${buildStructuredData(route)}`,
+    component: <App route={route.key} />,
+  }));
 
-  for (const route of routes) {
+  jobs.push({
+    label: '/404',
+    outFile: '404.html',
+    rootAttrs: ' data-page="404"',
+    head: [
+      '<title>404 — Page Not Found | Shumai</title>',
+      '<meta name="description" content="The page you requested could not be found." />',
+      '<meta name="robots" content="noindex, nofollow" />',
+      '<meta property="og:title" content="404 — Page Not Found | Shumai" />',
+      '<meta property="og:description" content="The page you requested could not be found." />',
+    ].join('\n    '),
+    component: <NotFound />,
+  });
+
+  console.log(`[SSG] Starting prerendering for ${jobs.length} pages...`);
+
+  for (const job of jobs) {
     const start = performance.now();
-    let html = template;
-
-    // Render component to string
-    const renderedMarkup = renderToString(route.component);
-
-    // Inject prerendered content into #root with page marker if needed
-    const rootTag = route.path === '/404' ? '<div id="root" data-page="404">' : '<div id="root">';
-    html = html.replace('<div id="root"></div>', `${rootTag}${renderedMarkup}</div>`);
-
-    // Customize title if specified
-    if (route.title) {
-      html = html.replace(/<title>.*?<\/title>/, `<title>${route.title}</title>`);
-    }
-
-    // Customize description if specified
-    if (route.description) {
-      html = html.replace(
-        /<meta\s+name="description"\s+content=".*?"\s*\/?>/i,
-        `<meta name="description" content="${route.description}" />`,
-      );
-    }
-
-    // 404 / noindex specific cleanups: remove canonical, remove schema, update social metadata
-    if (route.noindex) {
-      // Remove canonical tag
-      html = html.replace(/<link\s+rel="canonical"\s+href=".*?"\s*\/?>\s*/i, '');
-
-      // Remove homepage structured data (JSON-LD)
-      html = html.replace(/<script\s+type="application\/ld\+json">[\s\S]*?<\/script>\s*/i, '');
-
-      // Remove og:url and twitter:url
-      html = html.replace(/<meta\s+property="og:url"\s+content=".*?"\s*\/?>\s*/i, '');
-      html = html.replace(/<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>\s*/i, '');
-
-      // Update og:title and twitter:title to match 404 title
-      if (route.title) {
-        html = html.replace(
-          /<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i,
-          `<meta property="og:title" content="${route.title}" />`,
-        );
-        html = html.replace(
-          /<meta\s+name="twitter:title"\s+content=".*?"\s*\/?>/i,
-          `<meta name="twitter:title" content="${route.title}" />`,
-        );
-      }
-
-      // Update og:description and twitter:description to match 404 description
-      if (route.description) {
-        html = html.replace(
-          /<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i,
-          `<meta property="og:description" content="${route.description}" />`,
-        );
-        html = html.replace(
-          /<meta\s+name="twitter:description"\s+content=".*?"\s*\/?>/i,
-          `<meta name="twitter:description" content="${route.description}" />`,
-        );
-      }
-
-      // Add noindex directive
-      html = html.replace(
-        '</head>',
-        '    <meta name="robots" content="noindex, nofollow" />\n  </head>',
-      );
-    }
-
-    // Ensure target directory exists
-    const outDir = path.dirname(route.outFile);
-    if (!fs.existsSync(outDir)) {
-      fs.mkdirSync(outDir, { recursive: true });
-    }
-
-    fs.writeFileSync(route.outFile, html, 'utf-8');
+    const html = render(template, job);
+    const outPath = path.resolve(distDir, job.outFile);
+    fs.mkdirSync(path.dirname(outPath), { recursive: true });
+    fs.writeFileSync(outPath, html, 'utf-8');
     const duration = (performance.now() - start).toFixed(1);
     const sizeKb = (Buffer.byteLength(html, 'utf-8') / 1024).toFixed(2);
     console.log(
-      `[SSG]   ✓ Rendered ${route.path} -> ${path.relative(rootDir, route.outFile)} (${sizeKb} kB, ${duration}ms)`,
+      `[SSG]   ✓ Rendered ${job.label} -> dist/${job.outFile} (${sizeKb} kB, ${duration}ms)`,
     );
   }
 
+  writeSitemap();
   console.log('[SSG] Prerendering complete successfully.');
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "shumai",
-  "description": "One platform for all your creative work. Upload creative files, manage projects, assign tasks, get precise feedback, and share your work.",
+  "description": "Shumai is an open-source, self-hosted Frame.io alternative for creative teams: frame-accurate review, 3D and document previews, semantic search, watermarked share links, kanban, and an AI agent.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": []
 }
