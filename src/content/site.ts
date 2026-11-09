@@ -2,7 +2,8 @@ export const SITE_URL = 'https://shumai.one';
 export const GITHUB_URL = 'https://github.com/shumaiOne/shumai';
 export const DOCS_URL = 'https://docs.shumai.one';
 export const DEMO_URL = 'https://staging.shumai.one';
-export const DISCORD_URL = 'https://discord.gg/sUzhujK6DD';
+export const COMMUNITY_URL = 'https://shumai.discourse.group/';
+export const DISCOURSE_URL = COMMUNITY_URL;
 export const RELEASES_URL = 'https://github.com/shumaiOne/shumai/releases';
 export const DOCKER_HUB_URL = 'https://hub.docker.com/r/shumaione/shumai';
 

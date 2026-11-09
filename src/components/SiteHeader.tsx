@@ -1,6 +1,6 @@
 import { Github, Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { DOCS_URL, GITHUB_URL } from '../content/site';
+import { COMMUNITY_URL, DOCS_URL, GITHUB_URL } from '../content/site';
 import type { RouteKey } from '../types';
 import { ShumaiLogo } from './ShumaiLogo';
 
@@ -17,6 +17,7 @@ const NAV: NavItem[] = [
   { label: 'AI Agent', href: '/features/ai-agent', key: 'ai-agent' },
   { label: 'vs Frame.io', href: '/frame-io-alternative', key: 'frame-io-alternative' },
   { label: 'Docs', href: DOCS_URL, external: true },
+  { label: 'Community', href: COMMUNITY_URL, external: true },
 ];
 
 export function SiteHeader({ current }: { current: RouteKey }) {
@@ -31,8 +32,12 @@ export function SiteHeader({ current }: { current: RouteKey }) {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 bg-[#1A0609]/95 border-b border-[#E6C280]/15 backdrop-blur-md py-3.5 shadow-xl">
-      <div className="max-w-6xl mx-auto px-4 flex items-center justify-between gap-4">
-        <a href="/" aria-label="Shumai Homepage" className="flex items-center gap-3 group/logo">
+      <div className="max-w-6xl mx-auto px-4 flex items-center justify-between gap-2 lg:gap-4">
+        <a
+          href="/"
+          aria-label="Shumai Homepage"
+          className="flex items-center gap-3 group/logo shrink-0"
+        >
           <ShumaiLogo className="w-8 h-8 shadow-md group-hover/logo:scale-105 transition-transform" />
           <div className="relative group h-[28.8px] flex items-center">
             <div className="absolute top-0 left-0 w-1.5 h-1.5 border-t border-l border-[#E6C280]" />
@@ -45,14 +50,14 @@ export function SiteHeader({ current }: { current: RouteKey }) {
           </div>
         </a>
 
-        <nav aria-label="Main" className="hidden md:flex items-center gap-1">
+        <nav aria-label="Main" className="hidden md:flex items-center gap-0.5 lg:gap-1">
           {NAV.map((item) => (
             <a
               key={item.label}
               href={item.href}
               {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               aria-current={item.key === current ? 'page' : undefined}
-              className={`px-3 py-1.5 text-xs font-semibold tracking-wide rounded transition-colors ${
+              className={`px-2 lg:px-3 py-1.5 text-xs font-semibold tracking-wide rounded transition-colors whitespace-nowrap ${
                 item.key === current ? 'text-[#E6C280]' : 'text-gray-300 hover:text-[#E6C280]'
               }`}
             >
@@ -61,7 +66,7 @@ export function SiteHeader({ current }: { current: RouteKey }) {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <a
             href={GITHUB_URL}
             target="_blank"

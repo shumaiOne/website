@@ -1,7 +1,7 @@
 import { FEATURE_NAV, ROUTE_BY_KEY } from '../content/routes';
 import {
+  COMMUNITY_URL,
   DEMO_URL,
-  DISCORD_URL,
   DOCKER_HUB_URL,
   DOCS_URL,
   GITHUB_URL,
@@ -120,8 +120,13 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                Discord
+              <a
+                href={COMMUNITY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={linkClass}
+              >
+                Community
               </a>
             </li>
           </ul>
